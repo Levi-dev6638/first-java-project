@@ -7,9 +7,51 @@ import java.util.Scanner;
 public class Grademanagementsystem {
     static Scanner sc = new Scanner(System.in);
     static String[] nomes = new String[5];
-    static double[][] notas = new double[5][4];
+    static double[][] notas = new double[5][3];
     static ArrayList<String> aprovados = new ArrayList<>();
     static ArrayList<String> reprovados = new ArrayList<>();
+
+      static public void mediaTurma(){
+        double media = 0;
+         double soma = 0;
+        for(int i=0;i<5;i++){
+             for(int j=0;j<notas[i].length;j++){
+                soma += notas[i][j];
+             }   
+             media = soma / 15;    
+            }
+            System.out.println("media da turma e "+ media);
+    }
+
+        public static void reproAfbCrescente(){
+        System.out.println("reprovados em ordem crescente");
+        Collections.sort(reprovados);
+        for(String d: reprovados){
+            System.out.println(d);
+        }
+    }    
+
+       public static void alunoAprovados(){
+      for(int i=0;i<5;i++){
+            double soma = 0;
+            double media = 0;
+
+                for(int j=0;j<notas[i].length;j++){
+                    soma += notas[i][j];
+                    }
+                     media = soma / 3;
+
+                     if(media >= 7){
+                        aprovados.add(nomes[i]);   
+                        }else{reprovados.add(nomes[i]);
+                    }
+                }
+                System.out.println("Alunos aprovados");
+                for(int i = 0;i<aprovados.size();i++){
+                    System.out.println(aprovados.get(i));
+                }
+            }
+
     
       public static void ordemAfbCrescente(){
         System.out.println("Aprovados em ordem crescente");
@@ -18,10 +60,31 @@ public class Grademanagementsystem {
             System.out.println(d);
         }
     }
+     public static void maiorMedia(){
+        String alunoMaiormedia = "";
+         double maior = 0;
 
+        for(int i=0;i<5;i++){
+             double soma = 0;
+             for(int j=0;j<notas[i].length;j++){
+                soma += notas[i][j];  
+                }
+                double media = soma / 3;
+                if(media > maior){
+                    maior = media;
+                    alunoMaiormedia= nomes[i];
+
+            }
+        }
+        System.out.println("aluno com a maior média e " + alunoMaiormedia +"");
+        System.out.println("precione Enter para continuar...");
+        sc.nextLine();
+    }
     public static void cadastrarNome(){
+      sc.nextLine();
       for(int i=0;i<5;i++){
-      System.out.print("Digite o nome do "+i+1+" aluno");
+      System.out.print("Digite o nome do "+i+" aluno: ");
+      
       String aluno = sc.nextLine();
       nomes[i] = aluno;
       } 
@@ -29,19 +92,23 @@ public class Grademanagementsystem {
 
     public static void cadastrarNota(){
         for(int i=0;i<5;i++){
-            for(int j = 0;i<nomes.length;j++){
-                System.out.print("Digite a "+j+1+ " nota do "+i+1+ "aluno");
+            for(int j = 0;j<notas[i].length;j++){
+                System.out.print("Digite a "+j+ " nota do "+nomes[i]+  " aluno : ");
+               
                 notas[i][j] = sc.nextDouble();
              }
         }
     }
      public static void tabela(){
-      
+       sc.nextLine();
       for(int i=0;i<nomes.length;i++){
-           double media = (notas[i][0]+notas[i][1]+notas[i][2])/3;
-          System.out.print("Aluno   N1   N2   N3 ");
-          System.out.print(nomes[i] +" "+ notas[i][0]+ " "+ notas[i][1]+" "+notas[i][3]+" "+ media);
+          double media = (notas[i][0]+notas[i][1]+notas[i][2])/3;
+          System.out.print("Aluno   N1    N2    N3    média\n");
+          System.out.print(nomes[i] +  " "   + notas[i][0]+  " "  + notas[i][1]+  " "  +notas[i][2]+  " "  + media+  "\n");
+         
             }
+            System.out.println("precione Enter para continuar...");
+            sc.nextLine();
     }
      public static void menu(){
         boolean loop = true;
@@ -72,23 +139,31 @@ public class Grademanagementsystem {
                     tabela();
                     break;
                 case 4:
+                    alunoAprovados();
                     break;
                 case 5 :
+                    maiorMedia();
                     break;
                 case 6 :
+                    mediaTurma();
                     break;
                 case 7:
                     break;
                 case 8:
+                    ordemAfbCrescente();
                     break;
                 case 9:
+                    reproAfbCrescente();
                     break;
                 case 0:
+                    loop = false;
                     break;
                 default:
                     break;
              }
         }
      }
-    
+    public static void main(String[] args) {
+        menu();
+    }
 }
