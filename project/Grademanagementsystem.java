@@ -5,24 +5,29 @@ import java.util.Collections;
 import java.util.Scanner;
 
 public class Grademanagementsystem {
+    static String[] materias = {
+        "matematica","portugues","ciencias","historia","geografia"
+    };
     static Scanner sc = new Scanner(System.in);
     static String[] nomes = new String[5];
-    static double[][] notas = new double[5][3];
+    static double[][][] notas = new double[5][5][3];
     static ArrayList<String> aprovados = new ArrayList<>();
     static ArrayList<String> reprovados = new ArrayList<>();
 
       static public void mediaTurma(){
-        double media = 0;
+         double total = 0;
          double soma = 0;
         for(int i=0;i<5;i++){
-             for(int j=0;j<notas[i].length;j++){
-                soma += notas[i][j];
-             }   
-             media = soma / 15;    
+             for(int j=0;j<5;j++){
+                for(int k=0;k<3;k++){
+                  soma += notas[i][j][k];
+                  total++;
+             }       
             }
+            double media = soma / total;
             System.out.println("media da turma e "+ media);
     }
-
+      }
         public static void reproAfbCrescente(){
         System.out.println("reprovados em ordem crescente");
         Collections.sort(reprovados);
@@ -32,25 +37,32 @@ public class Grademanagementsystem {
     }    
 
        public static void alunoAprovados(){
-      for(int i=0;i<5;i++){
+        aprovados.clear();
+        reprovados.clear();
+
+      for(int i=0;i<nomes.length;i++){
             double soma = 0;
-            double media = 0;
-
-                for(int j=0;j<notas[i].length;j++){
-                    soma += notas[i][j];
+                for(int j=0;j<materias.length;j++){
+                     double somaM =0;
+                    for(int k=0;k<3;k++){
+                        somaM += notas[i][j][k];
                     }
-                     media = soma / 3;
+                    double mediaM = somaM /3;
+                    soma += mediaM;
+                    }
+                    double mediaF = soma / materias.length;
 
-                     if(media >= 7){
+                     if(mediaF >= 7){
                         aprovados.add(nomes[i]);   
                         }else{reprovados.add(nomes[i]);
                     }
                 }
                 System.out.println("Alunos aprovados");
-                for(int i = 0;i<aprovados.size();i++){
-                    System.out.println(aprovados.get(i));
+                for(String n : aprovados){
+                    System.out.println(n);
                 }
-            }
+                }
+            
 
     
       public static void ordemAfbCrescente(){
@@ -66,8 +78,10 @@ public class Grademanagementsystem {
 
         for(int i=0;i<5;i++){
              double soma = 0;
-             for(int j=0;j<notas[i].length;j++){
-                soma += notas[i][j];  
+             for(int j=0;j<5;j++){
+                    for(int k=0;k<3;k++){
+                        soma += notas[i][j][k];
+                    }  
                 }
                 double media = soma / 3;
                 if(media > maior){
@@ -91,25 +105,40 @@ public class Grademanagementsystem {
     }
 
     public static void cadastrarNota(){
-        for(int i=0;i<5;i++){
-            for(int j = 0;j<notas[i].length;j++){
-                System.out.print("Digite a "+j+ " nota do "+nomes[i]+  " aluno : ");
+        for(int i=0;i<nomes.length;i++){
+            System.out.println("\naluno :"+nomes[i]);
+            for(int j = 0;j<materias.length;j++){
+                System.out.println("materia :"+ materias[j]);
+                for(int k=0;k<3;k++){
+                    System.out.print("Digite a nota do "+nomes[i]+  " aluno : ");
                
-                notas[i][j] = sc.nextDouble();
+                notas[i][j][k] = sc.nextDouble();
+                }
+                
              }
         }
     }
      public static void tabela(){
        sc.nextLine();
       for(int i=0;i<nomes.length;i++){
-          double media = (notas[i][0]+notas[i][1]+notas[i][2])/3;
-          System.out.print("Aluno   N1    N2    N3    média\n");
-          System.out.print(nomes[i] +  " "   + notas[i][0]+  " "  + notas[i][1]+  " "  +notas[i][2]+  " "  + media+  "\n");
-         
+        System.out.println("\naluno :"+nomes[i]);
+         System.out.print("Aluno   N1    N2    N3    média\n");
+
+        for(int j = 0;j<materias.length;j++){
+
+          double media = (notas[i][j][0]+notas[i][j][1]+notas[i][j][2])/3;
+          System.out.println(
+            materias[j]+ "  "+
+            notas[i][j][0]+ "  "+
+            notas[i][j][1]+ "  "+
+            notas[i][j][2]+ "  "+
+            media
+          );
             }
             System.out.println("precione Enter para continuar...");
             sc.nextLine();
     }
+}
      public static void menu(){
         boolean loop = true;
         while(loop){
