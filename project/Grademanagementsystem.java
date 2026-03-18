@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.Scanner;
 
 public class Grademanagementsystem {
+
+
     static String[] materias = {
         "matematica","portugues","ciencias","historia","geografia"
     };
@@ -13,6 +15,35 @@ public class Grademanagementsystem {
     static double[][][] notas = new double[5][5][3];
     static ArrayList<String> aprovados = new ArrayList<>();
     static ArrayList<String> reprovados = new ArrayList<>();
+
+
+      public static void limparTerminal() {
+      System.out.print("\033[H\033[2J");
+      System.out.flush();
+      }
+
+      static public void disciplinaMaiorMedia(){
+        String disciplinaMaiorMedia = "";
+         double maior = 0;
+
+        for(int j=0;j<5;j++){
+             double soma = 0;
+             for(int i=0;i<5;i++){
+                    for(int k=0;k<3;k++){
+                        soma += notas[i][j][k];
+                    }  
+                }
+                double media = soma / 15;
+                if(media > maior){
+                    maior = media;
+                    disciplinaMaiorMedia= materias[j];
+
+            }
+        }
+        System.out.println("disciplina com a maior média e " + disciplinaMaiorMedia +"");
+        System.out.println("precione Enter para continuar...");
+        sc.nextLine();
+    }
 
       static public void mediaTurma(){
          double total = 0;
@@ -66,6 +97,7 @@ public class Grademanagementsystem {
 
     
       public static void ordemAfbCrescente(){
+        limparTerminal();
         System.out.println("Aprovados em ordem crescente");
         Collections.sort(aprovados);
         for(String d: aprovados){
@@ -95,6 +127,7 @@ public class Grademanagementsystem {
         sc.nextLine();
     }
     public static void cadastrarNome(){
+        limparTerminal();
       sc.nextLine();
       for(int i=0;i<5;i++){
       System.out.print("Digite o nome do "+i+" aluno: ");
@@ -105,19 +138,39 @@ public class Grademanagementsystem {
     }
 
     public static void cadastrarNota(){
-        for(int i=0;i<nomes.length;i++){
-            System.out.println("\naluno :"+nomes[i]);
-            for(int j = 0;j<materias.length;j++){
-                System.out.println("materia :"+ materias[j]);
-                for(int k=0;k<3;k++){
-                    System.out.print("Digite a nota do "+nomes[i]+  " aluno : ");
-               
-                notas[i][j][k] = sc.nextDouble();
+        limparTerminal();
+    for(int i=0;i<nomes.length;i++){
+        System.out.println("\nAluno: " + nomes[i]);
+
+        for(int j = 0;j<materias.length;j++){
+            System.out.println("Matéria: " + materias[j]);
+
+            for(int k=0;k<3;k++){
+                double nota;
+
+                while (true) {
+                    System.out.print("Digite a nota " + (k+1) + ": ");
+                    String entrada = sc.next(); // lê como texto
+
+                    try {
+                        nota = Double.parseDouble(entrada);
+
+                        if(nota >= 0 && nota <= 10){
+                            break; // válido
+                        } else {
+                            System.out.println("Nota deve ser entre 0 e 10.");
+                        }
+
+                    } catch (NumberFormatException e) {
+                        System.out.println("Entrada inválida! Digite um número.");
+                    }
                 }
-                
-             }
+
+                notas[i][j][k] = nota;
+            }
         }
     }
+}
      public static void tabela(){
        sc.nextLine();
       for(int i=0;i<nomes.length;i++){
@@ -177,6 +230,7 @@ public class Grademanagementsystem {
                     mediaTurma();
                     break;
                 case 7:
+                    disciplinaMaiorMedia();
                     break;
                 case 8:
                     ordemAfbCrescente();
