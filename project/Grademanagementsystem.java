@@ -133,8 +133,13 @@ public class Grademanagementsystem {
       System.out.print("Digite o nome do "+i+" aluno: ");
       
       String aluno = sc.nextLine();
+      if(aluno.isEmpty()){
+          System.out.println("Nome não pode ser vazio. Tente novamente.");
+          i--; // decrementa para repetir a entrada
+      } else {  
       nomes[i] = aluno;
       } 
+    }
     }
 
     public static void cadastrarNota(){
