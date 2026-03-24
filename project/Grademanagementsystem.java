@@ -17,11 +17,7 @@ public class Grademanagementsystem {
     static ArrayList<String> reprovados = new ArrayList<>();
 
 
-      public static void limparTerminal() {
-      System.out.print("\033[H\033[2J");
-      System.out.flush();
-      }
-
+      
       static public void disciplinaMaiorMedia(){
         String disciplinaMaiorMedia = "";
          double maior = 0;
@@ -43,6 +39,7 @@ public class Grademanagementsystem {
         System.out.println("disciplina com a maior média e " + disciplinaMaiorMedia +"");
         System.out.println("precione Enter para continuar...");
         sc.nextLine();
+        sc.nextLine();
     }
 
       static public void mediaTurma(){
@@ -57,6 +54,9 @@ public class Grademanagementsystem {
             }
             double media = soma / total;
             System.out.println("media da turma e "+ media);
+            System.out.println("precione Enter para continuar...");
+            sc.nextLine();
+            sc.nextLine();
     }
       }
         public static void reproAfbCrescente(){
@@ -65,6 +65,9 @@ public class Grademanagementsystem {
         for(String d: reprovados){
             System.out.println(d);
         }
+        System.out.println("precione Enter para continuar...");
+        sc.nextLine();
+        sc.nextLine();
     }    
 
        public static void alunoAprovados(){
@@ -92,12 +95,15 @@ public class Grademanagementsystem {
                 for(String n : aprovados){
                     System.out.println(n);
                 }
+                System.out.println("precione Enter para continuar...");
+                sc.nextLine();
+                sc.nextLine();
                 }
             
 
     
       public static void ordemAfbCrescente(){
-        limparTerminal();
+      
         System.out.println("Aprovados em ordem crescente");
         Collections.sort(aprovados);
         for(String d: aprovados){
@@ -125,9 +131,9 @@ public class Grademanagementsystem {
         System.out.println("aluno com a maior média e " + alunoMaiormedia +"");
         System.out.println("precione Enter para continuar...");
         sc.nextLine();
+        sc.nextLine();
     }
     public static void cadastrarNome(){
-        limparTerminal();
       sc.nextLine();
       for(int i=0;i<5;i++){
       System.out.print("Digite o nome do "+i+" aluno: ");
@@ -143,7 +149,7 @@ public class Grademanagementsystem {
     }
 
     public static void cadastrarNota(){
-        limparTerminal();
+   
     for(int i=0;i<nomes.length;i++){
         System.out.println("\nAluno: " + nomes[i]);
 
@@ -195,11 +201,13 @@ public class Grademanagementsystem {
             }
             System.out.println("precione Enter para continuar...");
             sc.nextLine();
+            sc.nextLine();
     }
 }
      public static void menu(){
         boolean loop = true;
         while(loop){
+           
              System.out.println("-----------------------------------");
              System.out.println("Bem Vindo ao  Menu Principal");
              System.out.println("Escolha a opçao desejada");
