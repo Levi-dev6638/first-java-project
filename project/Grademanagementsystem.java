@@ -7,6 +7,8 @@ import java.util.Scanner;
 
 public class Grademanagementsystem {
     // variáveis globais para armazenar as matérias, nomes dos alunos, notas e listas de aprovados e reprovados
+
+
     static String[] materias = {
         "matemática","português","ciências","história","geografia"
     };
@@ -160,6 +162,7 @@ public class Grademanagementsystem {
         }
         System.out.println("aluno com a maior média e " + alunoMaiormedia +"");
         System.out.println("precione Enter para continuar...");
+        sc.nextLine();
         sc.nextLine();
         sc.nextLine();
     }
