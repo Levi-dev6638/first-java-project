@@ -20,7 +20,13 @@ public class Grademanagementsystem {
        
     //funçao para calcular qual disciplina teve a maior media
 
+    public static void limparTela() {
+    System.out.print("\033[H\033[2J");
+    System.out.flush();
+}
+
     public static void disciplinaMaiorMedia(){
+        limparTela();
     double maiorMedia = 0;
     String melhorMateria = "";
 
@@ -52,11 +58,12 @@ public class Grademanagementsystem {
 }
        //funçao para mostrar a media da turma em cada disciplina
       static public void mediaTurma(){
+        limparTela();
          
-        for(int i=0;i<5;i++){
+        for(int i=0;i<materias.length;i++){
             double total = 0;
             double soma = 0;
-             for(int j=0;j<5;j++){
+             for(int j=0;j<nomes.length;j++){
                 for(int k=0;k<3;k++){
                   soma += notas[j][i][k]; // aluno j, matéria i, roda as 3 notas de 5 alunos em cada materia
                   total++;
@@ -65,10 +72,15 @@ public class Grademanagementsystem {
             double media = soma / total;// divide para saber a media dessa materia
             System.out.printf("media da turma em %s é %.2f\n", materias[i], media);
     }
+
+       System.out.println("Pressione Enter para continuar...");
+       sc.nextLine();
+       sc.nextLine();
       }
 
          //funçao para calcular a situação de cada aluno (aprovado ou reprovado)
         public static void calcularSituacao(){
+            limparTela();
         aprovados.clear();
         reprovados.clear();
         // i alunos ,j materia
@@ -97,6 +109,7 @@ public class Grademanagementsystem {
 
         //funçao para mostrar os reprovados em ordem alfabética
         public static void reproAfbCrescente(){
+            limparTela();
         calcularSituacao();
         //funçao que guarda os aprovados e reprovados
         System.out.println("reprovados em ordem crescente");
@@ -114,8 +127,7 @@ public class Grademanagementsystem {
 
        //funçao para mostrar os aprovados 
        public static void alunoAprovados(){
-        aprovados.clear();
-        reprovados.clear();
+        limparTela();
         //basicamente o mesmo que a de cima porem sem utilizar o sort
         calcularSituacao();
          System.out.println("Alunos aprovados");
@@ -130,6 +142,7 @@ public class Grademanagementsystem {
 
     //funçao para mostrar os aprovados em ordem alfabética
       public static void ordemAfbCrescente(){
+        limparTela();
         calcularSituacao();
         System.out.println("Aprovados em ordem crescente");
         Collections.sort(aprovados);
@@ -143,17 +156,18 @@ public class Grademanagementsystem {
     }
     //funçao para mostrar aluno com a maior media
      public static void maiorMedia(){
+        limparTela();
         String alunoMaiormedia = "";
          double maior = 0;
 
-        for(int i=0;i<5;i++){
+        for(int i=0;i<nomes.length;i++){
              double soma = 0;
-             for(int j=0;j<5;j++){//materia
+             for(int j=0;j<materias.length;j++){//materia
                     for(int k=0;k<3;k++){//notas por materia
                         soma += notas[i][j][k];
                     }  
                 }
-                double media = soma / (5 * 3);
+                double media = soma / (materias.length * 3);
                 if(media > maior){
                     maior = media;
                     alunoMaiormedia= nomes[i];
@@ -164,12 +178,13 @@ public class Grademanagementsystem {
         System.out.println("precione Enter para continuar...");
         sc.nextLine();
         sc.nextLine();
-        sc.nextLine();
+       
     }
     
     //funçao para cadastrar o nome dos alunos
     public static void cadastrarNome(){
       sc.nextLine(); //limpa buffer
+      limparTela();
 
       for(int i=0;i<5;i++){
         System.out.print("Digite o nome do "+(i+1)+" aluno: ");
@@ -179,7 +194,7 @@ public class Grademanagementsystem {
             throw new IllegalArgumentException("Nome não pode ser vazio");// exeção "forçada" para evitar que o nome seja vazio
             
         }
-        if(!aluno.matches("[\\p{L} ]+")){
+        if(!aluno.matches("[\\p{L} ]+")){  // \\p{L} (qulquer letra) + (pelomenos 1 caractere)
                 throw new IllegalArgumentException("Nome inválido! Não use números.");
         }
         nomes[i] = aluno;
@@ -191,6 +206,7 @@ public class Grademanagementsystem {
    }
    // funçao para cadastrar as notas
     public static void cadastrarNota(){
+        limparTela();
 
         for(int i=0;i<nomes.length;i++){//aluno
             System.out.println("\naluno :"+nomes[i]);
@@ -225,9 +241,10 @@ public class Grademanagementsystem {
     // funçao para mostrar a tabela
      public static void tabela(){
        sc.nextLine();
+       limparTela();
       for(int i=0;i<nomes.length;i++){
         System.out.println("\naluno :"+nomes[i]);
-         System.out.print("Aluno   N1    N2    N3    média\n");
+         System.out.print("Materia   N1    N2    N3    média\n");
 
         for(int j = 0;j<materias.length;j++){
 
@@ -250,8 +267,11 @@ public class Grademanagementsystem {
 
      // menu principal com switch case para escolher as opções
      public static void menu(){
+     
+
         int decision;
         do{
+             limparTela();
              System.out.println("_______________________________________");
              System.out.println("|----Bem Vindo ao  Menu Principal-----|");
              System.out.println("|------Escolha a opção desejada-------|");
@@ -277,7 +297,7 @@ public class Grademanagementsystem {
             }
 
              }catch(Exception e){
-             System.out.println("Digite um numero valido");
+             System.out.println("Digite um numero valido");//se digitar letra ou simbolo
              sc.nextLine();
              //volta a para o "começo"
              decision = -1;
